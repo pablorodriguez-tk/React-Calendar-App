@@ -5,7 +5,11 @@ import moment from "moment";
 import Swal from "sweetalert2";
 import { uiCloseModal } from "../../actions/ui";
 import { useDispatch, useSelector } from "react-redux";
-import { eventAddNew } from "../../actions/events";
+import {
+  eventAddNew,
+  eventClearActiveEvent,
+  eventUpdated,
+} from "../../actions/events";
 
 const customStyles = {
   content: {
@@ -46,6 +50,8 @@ const CalendarModal = () => {
   useEffect(() => {
     if (activeEvent) {
       setFormValues(activeEvent);
+    } else {
+      setFormValues(initEvent);
     }
   }, [activeEvent, setFormValues]);
 
@@ -58,6 +64,8 @@ const CalendarModal = () => {
 
   const closeModal = () => {
     dispatch(uiCloseModal());
+    dispatch(eventClearActiveEvent());
+
     setFormValues(initEvent);
   };
 
@@ -87,17 +95,23 @@ const CalendarModal = () => {
     if (title.trim().length < 2) {
       return setTitleValid(false);
     }
+
+    if (activeEvent) {
+      dispatch(eventUpdated(formValues));
+    } else {
+      dispatch(
+        eventAddNew({
+          ...formValues,
+          id: new Date().getDate(),
+          user: {
+            _id: "123",
+            name: "Fernando",
+          },
+        })
+      );
+    }
+
     //TODO:Realizar grabacion en base de datos
-    dispatch(
-      eventAddNew({
-        ...formValues,
-        id: new Date().getDate(),
-        user: {
-          _id: "123",
-          name: "Fernando",
-        },
-      })
-    );
 
     setTitleValid(true);
     closeModal();
@@ -113,7 +127,7 @@ const CalendarModal = () => {
       className="modal"
       overlayClassName="modal-fondo"
     >
-      <h1> Nuevo evento </h1>
+      <h1> {activeEvent ? "Editar evento" : "Nuevo evento"} </h1>
       <hr />
       <form className="container" onSubmit={handleSubmitForm}>
         <div className="form-group">
