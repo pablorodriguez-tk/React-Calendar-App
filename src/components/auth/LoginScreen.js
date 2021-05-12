@@ -25,7 +25,6 @@ const LoginScreen = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log(formLoginValues);
     dispatch(startLogin(lEmail, lPassword));
   };
 
@@ -34,7 +33,6 @@ const LoginScreen = () => {
     if (rPassword !== rPassword2) {
       return Swal.fire("Error", "Las contraseñas deben ser iguales", "error");
     }
-    console.log(formRegisterValues);
     dispatch(startRegister(rEmail, rPassword, rName));
   };
 

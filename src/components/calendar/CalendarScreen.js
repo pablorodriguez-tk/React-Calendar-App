@@ -35,7 +35,6 @@ const CalendarScreen = () => {
   }, [dispatch]);
 
   const onDoubleClick = (e) => {
-    console.log("Abrir modal");
     dispatch(uiOpenModal());
   };
 
