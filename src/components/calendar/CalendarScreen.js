@@ -22,11 +22,10 @@ const CalendarScreen = () => {
   const { events, activeEvent } = useSelector((state) => state.calendar);
 
   const [lastView, setLastView] = useState(
-    localStorage.getItem("lastView" || "month")
+    localStorage.getItem("lastView") || "month"
   );
 
   const onDoubleClick = (e) => {
-    // console.log(e);
     console.log("Abrir modal");
     dispatch(uiOpenModal());
   };
