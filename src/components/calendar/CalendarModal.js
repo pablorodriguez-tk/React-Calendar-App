@@ -6,9 +6,9 @@ import Swal from "sweetalert2";
 import { uiCloseModal } from "../../actions/ui";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  eventAddNew,
   eventClearActiveEvent,
-  eventUpdated,
+  eventStartAddNew,
+  eventStartUpdate,
 } from "../../actions/events";
 
 const customStyles = {
@@ -97,21 +97,10 @@ const CalendarModal = () => {
     }
 
     if (activeEvent) {
-      dispatch(eventUpdated(formValues));
+      dispatch(eventStartUpdate(formValues));
     } else {
-      dispatch(
-        eventAddNew({
-          ...formValues,
-          id: new Date().getDate(),
-          user: {
-            _id: "123",
-            name: "Fernando",
-          },
-        })
-      );
+      dispatch(eventStartAddNew(formValues));
     }
-
-    //TODO:Realizar grabacion en base de datos
 
     setTitleValid(true);
     closeModal();
@@ -134,7 +123,7 @@ const CalendarModal = () => {
           <label>Fecha y hora inicio</label>
           <DateTimePicker
             onChange={handleStartDateChange}
-            value={dateStart}
+            value={start}
             className="form-control"
             format="y-MM-dd h:mm:ss a"
             amPmAriaLabel="Select am/pm"
@@ -145,7 +134,7 @@ const CalendarModal = () => {
           <label>Fecha y hora fin</label>
           <DateTimePicker
             onChange={handleEndDateChange}
-            value={dateEnd}
+            value={end}
             className="form-control"
             format="y-MM-dd h:mm:ss a"
             amPmAriaLabel="Select am/pm"
