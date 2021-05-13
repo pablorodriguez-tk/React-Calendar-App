@@ -1,16 +1,16 @@
-import Swal from "sweetalert2";
-import { fetchConToken, fetchSinToken } from "../helpers/fetch";
-import { types } from "../types/types";
-import { eventLogout } from "./events";
+import Swal from 'sweetalert2';
+import { fetchConToken, fetchSinToken } from '../helpers/fetch';
+import { types } from '../types/types';
+import { eventLogout } from './events';
 
 export const startLogin = (email, password) => {
   return async (dispatch) => {
-    const resp = await fetchSinToken("auth", { email, password }, "POST");
+    const resp = await fetchSinToken('auth', { email, password }, 'POST');
     const body = await resp.json();
 
     if (body.ok) {
-      localStorage.setItem("token", body.token);
-      localStorage.setItem("token-init-date", new Date().getTime());
+      localStorage.setItem('token', body.token);
+      localStorage.setItem('token-init-date', new Date().getTime());
       dispatch(
         login({
           uid: body.uid,
@@ -18,7 +18,7 @@ export const startLogin = (email, password) => {
         })
       );
     } else {
-      Swal.fire("Error", body.msg, "error");
+      Swal.fire('Error', body.msg, 'error');
     }
   };
 };
@@ -26,15 +26,15 @@ export const startLogin = (email, password) => {
 export const startRegister = (email, password, name) => {
   return async (dispatch) => {
     const resp = await fetchSinToken(
-      "auth/new",
+      'auth/new',
       { email, password, name },
-      "POST"
+      'POST'
     );
     const body = await resp.json();
 
     if (body.ok) {
-      localStorage.setItem("token", body.token);
-      localStorage.setItem("token-init-date", new Date().getTime());
+      localStorage.setItem('token', body.token);
+      localStorage.setItem('token-init-date', new Date().getTime());
       dispatch(
         login({
           uid: body.uid,
@@ -42,19 +42,19 @@ export const startRegister = (email, password, name) => {
         })
       );
     } else {
-      Swal.fire("Error", body.msg, "error");
+      Swal.fire('Error', body.msg, 'error');
     }
   };
 };
 
 export const startChecking = () => {
   return async (dispatch) => {
-    const resp = await fetchConToken("auth/renew");
+    const resp = await fetchConToken('auth/renew');
     const body = await resp.json();
 
     if (body.ok) {
-      localStorage.setItem("token", body.token);
-      localStorage.setItem("token-init-date", new Date().getTime());
+      localStorage.setItem('token', body.token);
+      localStorage.setItem('token-init-date', new Date().getTime());
       dispatch(
         login({
           uid: body.uid,
