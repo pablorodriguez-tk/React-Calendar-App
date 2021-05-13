@@ -1,24 +1,24 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import Swal from "sweetalert2";
-import { startLogin, startRegister } from "../../actions/auth";
-import useForm from "../../hooks/useForm";
-import "./login.css";
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
+import { startLogin, startRegister } from '../../actions/auth';
+import useForm from '../../hooks/useForm';
+import './login.css';
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
   const [formLoginValues, handleLoginInputChange] = useForm({
-    lEmail: "pablo@gmail.com",
-    lPassword: "123456",
+    lEmail: '',
+    lPassword: '',
   });
 
   const { lEmail, lPassword } = formLoginValues;
 
   const [formRegisterValues, handleRegisterInputChange] = useForm({
-    rName: "Nando",
-    rEmail: "nando@gmail.com",
-    rPassword: "123456",
-    rPassword2: "123456",
+    rName: 'Nando',
+    rEmail: 'nando@gmail.com',
+    rPassword: '123456',
+    rPassword2: '123456',
   });
 
   const { rName, rEmail, rPassword, rPassword2 } = formRegisterValues;
@@ -31,7 +31,7 @@ const LoginScreen = () => {
   const handleRegister = (e) => {
     e.preventDefault();
     if (rPassword !== rPassword2) {
-      return Swal.fire("Error", "Las contraseñas deben ser iguales", "error");
+      return Swal.fire('Error', 'Las contraseñas deben ser iguales', 'error');
     }
     dispatch(startRegister(rEmail, rPassword, rName));
   };
