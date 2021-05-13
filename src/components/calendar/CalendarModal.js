@@ -1,35 +1,37 @@
-import React, { useEffect, useState } from "react";
-import Modal from "react-modal";
-import DateTimePicker from "react-datetime-picker";
-import moment from "moment";
-import Swal from "sweetalert2";
-import { uiCloseModal } from "../../actions/ui";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import Modal from 'react-modal';
+import DateTimePicker from 'react-datetime-picker';
+import moment from 'moment';
+import Swal from 'sweetalert2';
+import { uiCloseModal } from '../../actions/ui';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   eventClearActiveEvent,
   eventStartAddNew,
   eventStartUpdate,
-} from "../../actions/events";
+} from '../../actions/events';
 
 const customStyles = {
   content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
   },
 };
 
-Modal.setAppElement("#root");
+if (process.env.NODE_ENV !== 'test') {
+  Modal.setAppElement('#root');
+}
 
-const now = moment().minutes(0).seconds(0).add(1, "hours");
-const nowPlus1 = now.clone().add(1, "hours");
+const now = moment().minutes(0).seconds(0).add(1, 'hours');
+const nowPlus1 = now.clone().add(1, 'hours');
 
 const initEvent = {
-  title: "",
-  notes: "",
+  title: '',
+  notes: '',
   start: now.toDate(),
   end: nowPlus1.toDate(),
 };
@@ -86,9 +88,9 @@ const CalendarModal = () => {
 
     if (momentStart.isSameOrAfter(momentEnd)) {
       return Swal.fire(
-        "Error",
-        "La fecha de fin debe de ser mayor a la fecha de inicio",
-        "error"
+        'Error',
+        'La fecha de fin debe de ser mayor a la fecha de inicio',
+        'error'
       );
     }
 
@@ -116,7 +118,7 @@ const CalendarModal = () => {
       className="modal"
       overlayClassName="modal-fondo"
     >
-      <h1> {activeEvent ? "Editar evento" : "Nuevo evento"} </h1>
+      <h1> {activeEvent ? 'Editar evento' : 'Nuevo evento'} </h1>
       <hr />
       <form className="container" onSubmit={handleSubmitForm}>
         <div className="form-group">
@@ -147,7 +149,7 @@ const CalendarModal = () => {
           <label>Titulo y notas</label>
           <input
             type="text"
-            className={`form-control ${!titleValid && "is-invalid"}`}
+            className={`form-control ${!titleValid && 'is-invalid'}`}
             placeholder="Título del evento"
             name="title"
             autoComplete="off"
